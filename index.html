@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Question for You</title>
+  
+  <!-- Fonts matching the style -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f7ebe8;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #4a4a4a;
+      overflow: hidden;
+    }
+
+    .card {
+      background: #fcf8f2;
+      padding: 35px 25px;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+      text-align: center;
+      width: 90%;
+      max-width: 380px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .profile-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .icon-badge {
+      width: 50px;
+      height: 50px;
+      background-color: #f3a847;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin: 0 auto 15px auto;
+    }
+
+    h1, h2 {
+      font-family: 'Playfair Display', serif;
+      color: #8c2a3e;
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    p.subtitle {
+      font-size: 13px;
+      color: #8a8a8a;
+      margin-bottom: 20px;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 20px;
+      position: relative;
+      min-height: 45px;
+    }
+
+    button {
+      border: none;
+      padding: 10px 22px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.2s;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-primary {
+      background-color: #d9435e;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #bd344d;
+      transform: scale(1.03);
+    }
+
+    .btn-secondary {
+      background-color: #a29bfe;
+      color: white;
+      position: relative;
+    }
+
+    /* Step Views */
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    /* Grid Layouts for Date, Time, Food */
+    .grid {
+      display: grid;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .grid-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-btn {
+      background: #f4ede2;
+      border: 1px solid transparent;
+      padding: 10px 5px;
+      border-radius: 12px;
+      font-size: 13px;
+      color: #555;
+      cursor: pointer;
+    }
+
+    .grid-btn:hover, .grid-btn.selected {
+      border-color: #d9435e;
+      background: #f0e2d5;
+      color: #8c2a3e;
+    }
+
+    .food-card {
+      background: #f4ede2;
+      padding: 12px 8px;
+      border-radius: 14px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .food-card:hover {
+      background: #ebdcd0;
+    }
+
+    .food-icon {
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    
+    <!-- STEP 1: Main Question -->
+    <div id="step-1" class="step active">
+      <img src="https://via.placeholder.com/100" alt="Crush Photo" class="profile-img">
+      <h1>Will you go on a date with me? 🌸</h1>
+      <div class="btn-container">
+        <button class="btn-primary" onclick="goToStep(2)">YES ❤</button>
+        <button id="no-btn" class="btn-secondary" onmouseover="moveNoButton()" onclick="moveNoButton()">no 🥺</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Confirmation -->
+    <div id="step-2" class="step">
+      <div class="icon-badge">🎉</div>
+      <h1>Wait, you really said yes?? 😜</h1>
+      <p class="subtitle">Ngl I was fully prepared for a no 😅</p>
+      <button class="btn-primary" onclick="goToStep(3)">pick a date & time &rarr;</button>
+    </div>
+
+    <!-- STEP 3: Date Selection -->
+    <div id="step-3" class="step">
+      <div class="icon-badge">📅</div>
+      <h1>when's the date? 📅</h1>
+      <p class="subtitle">pick a day, any day.</p>
+      
+      <div class="grid grid-3">
+        <button class="grid-btn" onclick="selectOption(this, 4)">Sep 10</button>
+        <button class="grid-btn" onclick="selectOption(this, 4)">Sep 11</button>
+        <button class="grid-btn" onclick="selectOption(this, 4)">Sep 12</button>
+        <button class="grid-btn" onclick="selectOption(this, 4)">Sep 13</button>
+        <button class="grid-btn" onclick="selectOption(this, 4)">Sep 14</button>
+        <button class="grid-btn" onclick="selectOption(this, 4)">Sep 15</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Time Selection -->
+    <div id="step-4" class="step">
+      <div class="icon-badge">⏰</div>
+      <h1>what time works? ⏰</h1>
+      <p class="subtitle">pick a time slot</p>
+      
+      <div class="grid grid-2">
+        <button class="grid-btn" onclick="selectOption(this, 5)">5:00 PM</button>
+        <button class="grid-btn" onclick="selectOption(this, 5)">5:30 PM</button>
+        <button class="grid-btn" onclick="selectOption(this, 5)">6:00 PM</button>
+        <button class="grid-btn" onclick="selectOption(this, 5)">6:30 PM</button>
+        <button class="grid-btn" onclick="selectOption(this, 5)">7:00 PM</button>
+        <button class="grid-btn" onclick="selectOption(this, 5)">7:30 PM</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Food Selection -->
+    <div id="step-5" class="step">
+      <h1>What are we chopping? 🍽️</h1>
+      <p class="subtitle">pick your vibe.</p>
+      
+      <div class="grid grid-2">
+        <div class="food-card" onclick="goToStep(6)">
+          <span class="food-icon">🍚</span>
+          <span>Jollof Rice</span>
+        </div>
+        <div class="food-card" onclick="goToStep(6)">
+          <span class="food-icon">🍢</span>
+          <span>Suya</span>
+        </div>
+        <div class="food-card" onclick="goToStep(6)">
+          <span class="food-icon">🍲</span>
+          <span>Amala & Ewedu</span>
+        </div>
+        <div class="food-card" onclick="goToStep(6)">
+          <span class="food-icon">🍩</span>
+          <span>Puff-Puff</span>
+        </div>
+        <div class="food-card" onclick="goToStep(6)">
+          <span class="food-icon">🍗</span>
+          <span>Small Chops</span>
+        </div>
+        <div class="food-card" onclick="goToStep(6)">
+          <span class="food-icon">🌯</span>
+          <span>Shawarma</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6: Final Message -->
+    <div id="step-6" class="step">
+      <h1>glad you didn't say no.<br>be ready. I'm coming to get you 🏎️</h1>
+      <p class="subtitle" style="margin-top: 15px;">P.S. made a website for you, no big deal.</p>
+      <div style="margin: 15px 0;">❤️❤️❤️❤️❤️</div>
+      <button class="btn-primary" onclick="alert('It\'s a date!')">ok I accept 🥰</button>
+    </div>
+
+  </div>
+
+  <script>
+    function goToStep(stepNumber) {
+      document.querySelectorAll('.step').forEach(step => {
+        step.classList.remove('active');
+      });
+      document.getElementById(`step-${stepNumber}`).classList.add('active');
+    }
+
+    function selectOption(element, nextStep) {
+      setTimeout(() => {
+        goToStep(nextStep);
+      }, 200);
+    }
+
+    function moveNoButton() {
+      const btn = document.getElementById('no-btn');
+      const x = Math.random() * (window.innerWidth - 100) - (window.innerWidth / 2 - 50);
+      const y = Math.random() * (window.innerHeight - 100) - (window.innerHeight / 2 - 50);
+      
+      btn.style.position = 'absolute';
+      btn.style.left = `${Math.max(-100, Math.min(100, x))}px`;
+      btn.style.top = `${Math.max(-100, Math.min(100, y))}px`;
+    }
+  </script>
+</body>
+      </html>
+      
